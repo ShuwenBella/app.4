@@ -3,7 +3,7 @@ import math
 
 #init variables
 size = 256
-kernelwidth = 10
+kernelwidth = 11
 
 #define vector field
 def vecField(x, y):
@@ -14,80 +14,78 @@ def vecField(x, y):
     if l != 0:
         vx = vx / l
         vy = vy / l
-    
+
     return (vx, vy)
 
+#clamping to image sizes
+#set p to 0 if negative and to size-1 if to greater
 def checkBounds(p):
-    if p < 0:
-        p = 0
-    if p > (size-1):
-        p = (size-1)
+        #your code here
     return p
 
+#bilinear interpolation
+#img is defined at integer valued indices
 def imgAt(img, x, y):
-    dx = x - math.floor(x)
-    dy = y - math.floor(y)
-    i0 = img[int(math.floor(y) * size + math.floor(x))]
-    i1 = img[int(math.floor(y) * size + math.ceil(x))]
-    i2 = img[int(math.ceil(y) * size + math.floor(x))]
-    i3 = img[int(math.ceil(y) * size + math.ceil(x))]
-
-    i01 = dx * i1 + (1.0 - dx) * i0
-    i23 = dx * i3 + (1.0 - dx) * i2
-
-    ret = dy * i23 + (1.0 - dy) * i01
+        #your code here
     return ret
 
+
+
 #init random number image of appropriate size
-img = [random.randint(0,255) for _ in xrange(size*size)]
-
-#write to PGM
-f = open('img.pgm', 'w')
-f.write('P2\n')
-f.write(str(size) + ' ' + str(size) + '\n')
-f.write('255\n')
-
-for y in range(0, size):
-    for x in range(0, size):
-        f.write(str(int(img[y*size + x])) + ' ')
-
-f.close()
+img = 
+#initialize output image of appropriate size
+lic =
 
 
-lic = [0] * (size*size)
+#################################################
+#write noise image to 'assignment6.1-noise.pgm' in PGM format
+#open file
+f = ...
+
+#write header
+
+#write image information
+
+#close file
+#################################################
+
+
+
+#################################################
 #perform lic
-for y in range(0, size):
-    for x in range(0, size):
-        res = imgAt(img, x, y)
-        curX = x
-        curY = y
-        for i in range(1, kernelwidth/2):
-            (vx, vy) = vecField(curX, curY)
-            curX = curX + vx
-            curX = checkBounds(curX)
-            curY = curY + vy
-            curY = checkBounds(curY)
-            res = res + imgAt(img, curX, curY)
-        curX = x
-        curY = y
-        for i in range(1, kernelwidth/2):
-            (vx, vy) = vecField(curX, curY)
-            curX = curX - vx
-            curX = checkBounds(curX)
-            curY = curY - vy
-            curY = checkBounds(curY)
-            res = res + imgAt(img, curX, curY)
-        lic[y*size + x] = res / float(kernelwidth)
+    #initialize res with img at current position
+
+    #perfom K explicit euler steps in positive direction
+    #K = kernelwidth/2
+
+        #compute new coordinates
+        #clamp coordinates
+                        
+        #get image at new position using bilinear interpolation
+        #add to res
+    
+    #perfom K explicit euler steps in negative direction
+    #K = kernelwidth/2
+
+        #compute new coordinates
+        #clamp coordinates
+                        
+        #get image at new position using bilinear interpolation
+        #add to res        
+              
+    #normalize by kernelwidth and set lic pixel in output image
+#################################################
 
 
-#write to PGM
-f = open('lic.pgm', 'w')
-f.write('P2\n')
-f.write(str(size) + ' ' + str(size) + '\n')
-f.write('255\n')
+#################################################
+#write output lic image to 'assignment6.1.pgm'
+#open file
+f = ...
 
-for y in range(0, size):
-    for x in range(0, size):
-        f.write(str(int(lic[y*size + x])) + ' ')
-    f.write('\n ')
-f.close()
+#write header
+
+#write image information
+
+
+#close file
+#################################################
